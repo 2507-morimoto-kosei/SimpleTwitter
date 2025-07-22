@@ -19,7 +19,6 @@ public class CipherUtil {
 	 * @return 暗号化された文字列
 	 */
 	public static String encrypt(String target) {
-
 		try {
 			MessageDigest md = MessageDigest.getInstance("SHA-256");
 			md.update(target.getBytes());
@@ -28,5 +27,4 @@ public class CipherUtil {
 			throw new RuntimeException(e);
 		}
 	}
-
 }

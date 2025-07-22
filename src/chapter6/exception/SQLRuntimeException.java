@@ -8,5 +8,4 @@ public class SQLRuntimeException extends RuntimeException {
 	public SQLRuntimeException(SQLException cause) {
 		super(cause);
 	}
-
 }
