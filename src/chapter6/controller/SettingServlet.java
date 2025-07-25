@@ -39,10 +39,8 @@ public class SettingServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		log.info(new Object() {
-		}.getClass().getEnclosingClass().getName() +
-				" : " + new Object() {
-				}.getClass().getEnclosingMethod().getName());
+		log.info(new Object() {}.getClass().getEnclosingClass().getName() +
+		" : " + new Object() {}.getClass().getEnclosingMethod().getName());
 
 		HttpSession session = request.getSession();
 		User loginUser = (User) session.getAttribute("loginUser");
@@ -72,7 +70,6 @@ public class SettingServlet extends HttpServlet {
 				errorMessages.add("他の人によって更新されています。最新のデータを表示しました。データを確認してください。");
 			}
 		}
-
 		if (errorMessages.size() != 0) {
 			request.setAttribute("errorMessages", errorMessages);
 			request.setAttribute("user", user);
@@ -109,6 +106,11 @@ public class SettingServlet extends HttpServlet {
 		String account = user.getAccount();
 		String email = user.getEmail();
 
+		User check = new UserService().select(user.getAccount());
+
+		if (check != null && user.getId() != check.getId()) {
+			errorMessages.add("すでに存在するアカウントです");
+		}
 		if (!StringUtils.isEmpty(name) && (20 < name.length())) {
 			errorMessages.add("名前は20文字以下で入力してください");
 		}

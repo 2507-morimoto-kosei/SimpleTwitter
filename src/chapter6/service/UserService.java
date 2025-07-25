@@ -40,6 +40,7 @@ public class UserService {
 			String encPassword = CipherUtil.encrypt(user.getPassword());
 			user.setPassword(encPassword);
 			connection = getConnection();
+
 			new UserDao().insert(connection, user);
 			commit(connection);
 		} catch (RuntimeException e) {
@@ -85,7 +86,9 @@ public class UserService {
 			close(connection);
 		}
 	}
-
+	/*
+	 * ここは重複IDを処理する
+	 */
 	public User select(int userId) {
 
 		log.info(new Object() {}.getClass().getEnclosingClass().getName() +
@@ -95,6 +98,36 @@ public class UserService {
 		try {
 			connection = getConnection();
 			User user = new UserDao().select(connection, userId);
+			commit(connection);
+			return user;
+		} catch (RuntimeException e) {
+			rollback(connection);
+			log.log(Level.SEVERE, new Object() {}.getClass().getEnclosingClass().getName() +
+			" : " + e.toString(), e);
+			throw e;
+		} catch (Error e) {
+			rollback(connection);
+			log.log(Level.SEVERE, new Object() {}.getClass().getEnclosingClass().getName() +
+			" : " + e.toString(), e);
+			throw e;
+		} finally {
+			close(connection);
+		}
+	}
+
+	/*
+	 * String型の引数をもつ、selectメソッドを追加
+	 * ここは重複アカウントを処理する
+	 */
+	public User select(String account) {
+
+		log.info(new Object() {}.getClass().getEnclosingClass().getName() +
+		" : " + new Object() {}.getClass().getEnclosingMethod().getName());
+
+		Connection connection = null;
+		try {
+			connection = getConnection();
+			User user = new UserDao().select(connection, account);
 			commit(connection);
 			return user;
 		} catch (RuntimeException e) {
