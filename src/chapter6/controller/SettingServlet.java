@@ -81,7 +81,8 @@ public class SettingServlet extends HttpServlet {
 		response.sendRedirect("./");
 	}
 
-	private User getUser(HttpServletRequest request) throws IOException, ServletException {
+	private User getUser(HttpServletRequest request)
+			throws IOException, ServletException {
 
 		log.info(new Object() {}.getClass().getEnclosingClass().getName() +
 		" : " + new Object() {
