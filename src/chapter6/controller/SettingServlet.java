@@ -85,8 +85,7 @@ public class SettingServlet extends HttpServlet {
 			throws IOException, ServletException {
 
 		log.info(new Object() {}.getClass().getEnclosingClass().getName() +
-		" : " + new Object() {
-		}.getClass().getEnclosingMethod().getName());
+		" : " + new Object() {}.getClass().getEnclosingMethod().getName());
 
 		User user = new User();
 		user.setId(Integer.parseInt(request.getParameter("id")));
