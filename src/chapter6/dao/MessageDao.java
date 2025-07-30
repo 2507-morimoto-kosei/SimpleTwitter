@@ -78,8 +78,8 @@ public class MessageDao {
 			ResultSet rs = ps.executeQuery();
 
 			List<Message> messages = toMessage(rs);
-			return messages.get(0);
 
+			return messages.get(0);
 		} catch (SQLException e) {
 			throw new SQLRuntimeException(e);
 		} finally {

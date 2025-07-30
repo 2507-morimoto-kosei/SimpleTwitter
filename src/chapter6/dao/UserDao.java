@@ -149,6 +149,11 @@ public class UserDao {
 	 * アカウント名が重複していないかの確認
 	 */
 	public User select(Connection connection, String account) {
+
+		log.info(new Object() {}.getClass().getEnclosingClass().getName() +
+		" : " + new Object() {}.getClass().getEnclosingMethod().getName());
+
+
 		PreparedStatement ps = null;
 		try {
 			String sql = "SELECT * FROM users WHERE account = ?";
@@ -176,8 +181,7 @@ public class UserDao {
 
 	private List<User> toUsers(ResultSet rs) throws SQLException {
 
-		log.info(new Object() {
-		}.getClass().getEnclosingClass().getName() +
+		log.info(new Object() {}.getClass().getEnclosingClass().getName() +
 		" : " + new Object() {}.getClass().getEnclosingMethod().getName());
 
 		List<User> users = new ArrayList<User>();
