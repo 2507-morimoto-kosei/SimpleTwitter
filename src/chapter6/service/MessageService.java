@@ -18,14 +18,14 @@ import chapter6.logging.InitApplication;
 
 public class MessageService {
 	/**
-	* ロガーインスタンスの生成
-	*/
+	 * ロガーインスタンスの生成
+	 */
 	Logger log = Logger.getLogger("twitter");
 
 	/**
-	* デフォルトコンストラクタ
-	* アプリケーションの初期化を実施する。
-	*/
+	 * デフォルトコンストラクタ
+	 * アプリケーションの初期化を実施する。
+	 */
 	public MessageService() {
 		InitApplication application = InitApplication.getInstance();
 		application.init();
@@ -81,7 +81,7 @@ public class MessageService {
 		}
 	}
 
-	public Message select_message(String messageId) {
+	public Message selectMessage(String messageId) {
 
 		log.info(new Object() {}.getClass().getEnclosingClass().getName() +
 		" : " + new Object() {}.getClass().getEnclosingMethod().getName());

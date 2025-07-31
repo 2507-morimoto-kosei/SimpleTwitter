@@ -20,6 +20,7 @@
 				</div>
 			</c:if>
 
+			<!-- LoginServletへログインを試みるユーザーの情報を渡す -->
 			<form action="login" method="post"><br />
 				<label for="accountOrEmail">アカウント名かメールアドレス</label>
 				<input name="accountOrEmail" id="accountOrEmail"/><br />

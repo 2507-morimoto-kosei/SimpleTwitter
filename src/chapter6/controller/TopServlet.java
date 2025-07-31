@@ -19,14 +19,14 @@ import chapter6.service.MessageService;
 public class TopServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	/**
-	* ロガーインスタンスの生成
-	*/
+	 * ロガーインスタンスの生成
+	 */
 	Logger log = Logger.getLogger("twitter");
 
 	/**
-	* デフォルトコンストラクタ
-	* アプリケーションの初期化を実施する。
-	*/
+	 * デフォルトコンストラクタ
+	 * アプリケーションの初期化を実施する。
+	 */
 	public TopServlet() {
 		InitApplication application = InitApplication.getInstance();
 		application.init();

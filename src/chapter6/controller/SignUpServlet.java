@@ -20,14 +20,14 @@ import chapter6.service.UserService;
 @WebServlet(urlPatterns = { "/signup" })
 public class SignUpServlet extends HttpServlet {
 	/**
-	* ロガーインスタンスの生成
-	*/
+	 * ロガーインスタンスの生成
+	 */
 	Logger log = Logger.getLogger("twitter");
 
 	/**
-	* デフォルトコンストラクタ
-	* アプリケーションの初期化を実施する。
-	*/
+	 * デフォルトコンストラクタ
+	 * アプリケーションの初期化を実施する。
+	 */
 	public SignUpServlet() {
 		InitApplication application = InitApplication.getInstance();
 		application.init();

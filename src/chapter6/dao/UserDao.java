@@ -20,14 +20,14 @@ import chapter6.logging.InitApplication;
 
 public class UserDao {
 	/**
-	* ロガーインスタンスの生成
-	*/
+	 * ロガーインスタンスの生成
+	 */
 	Logger log = Logger.getLogger("twitter");
 
 	/**
-	* デフォルトコンストラクタ
-	* アプリケーションの初期化を実施する。
-	*/
+	 * デフォルトコンストラクタ
+	 * アプリケーションの初期化を実施する。
+	 */
 	public UserDao() {
 		InitApplication application = InitApplication.getInstance();
 		application.init();

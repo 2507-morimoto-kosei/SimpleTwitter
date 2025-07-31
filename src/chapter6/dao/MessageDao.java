@@ -18,14 +18,14 @@ import chapter6.logging.InitApplication;
 
 public class MessageDao {
 	/**
-	* ロガーインスタンスの生成
-	*/
+	 * ロガーインスタンスの生成
+	 */
 	Logger log = Logger.getLogger("twitter");
 
 	/**
-	* デフォルトコンストラクタ
-	* アプリケーションの初期化を実施する。
-	*/
+	 * デフォルトコンストラクタ
+	 * アプリケーションの初期化を実施する。
+	 */
 	public MessageDao() {
 		InitApplication application = InitApplication.getInstance();
 		application.init();
@@ -78,9 +78,14 @@ public class MessageDao {
 			ResultSet rs = ps.executeQuery();
 
 			List<Message> messages = toMessage(rs);
-
-			return messages.get(0);
+			if (messages.isEmpty()) {
+				return null;
+			} else {
+				return messages.get(0);
+			}
 		} catch (SQLException e) {
+			log.log(Level.SEVERE, new Object() {}.getClass().getEnclosingClass().getName() +
+			" : " + e.toString(), e);
 			throw new SQLRuntimeException(e);
 		} finally {
 			close(ps);

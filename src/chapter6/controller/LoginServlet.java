@@ -20,18 +20,17 @@ import chapter6.service.UserService;
 public class LoginServlet extends HttpServlet {
 
 	/**
-	* ロガーインスタンスの生成
-	*/
+	 * ロガーインスタンスの生成
+	 */
 	Logger log = Logger.getLogger("twitter");
 
 	/**
-	* デフォルトコンストラクタ
-	* アプリケーションの初期化を実施する。
-	*/
+	 * デフォルトコンストラクタ
+	 * アプリケーションの初期化を実施する。
+	 */
 	public LoginServlet() {
 		InitApplication application = InitApplication.getInstance();
 		application.init();
-
 	}
 
 	@Override
@@ -41,7 +40,7 @@ public class LoginServlet extends HttpServlet {
 		log.info(new Object() {
 		}.getClass().getEnclosingClass().getName() +
 		" : " + new Object() {}.getClass().getEnclosingMethod().getName());
-
+		//login.jspへ画面遷移要求
 		request.getRequestDispatcher("login.jsp").forward(request, response);
 	}
 
@@ -53,9 +52,11 @@ public class LoginServlet extends HttpServlet {
 		}.getClass().getEnclosingClass().getName() +
 		" : " + new Object() {}.getClass().getEnclosingMethod().getName());
 
+		//ログインを試みるユーザー情報の受け取り
 		String accountOrEmail = request.getParameter("accountOrEmail");
 		String password = request.getParameter("password");
 
+		//登録済みユーザーか確かめるためにDBへ情報を渡す(Serviceクラス挟むけどね)
 		User user = new UserService().select(accountOrEmail, password);
 		if (user == null) {
 			List<String> errorMessages = new ArrayList<String>();
@@ -64,7 +65,7 @@ public class LoginServlet extends HttpServlet {
 			request.getRequestDispatcher("login.jsp").forward(request, response);
 			return;
 		}
-
+		//登録済みユーザーであればセッション領域に登録済みユーザー情報塊を保存
 		HttpSession session = request.getSession();
 		session.setAttribute("loginUser", user);
 		response.sendRedirect("./");
