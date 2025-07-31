@@ -67,13 +67,13 @@ public class MessageDao {
 	}
 
 	//同じIDのメッセージを取り出す
-	public Message select(Connection connection, String messageId) {
+	public Message select(Connection connection, int messageId) {
 		PreparedStatement ps = null;
 		try {
 			String sql = "SELECT * FROM messages WHERE id = ?";
 
 			ps = connection.prepareStatement(sql);
-			ps.setString(1, messageId);
+			ps.setInt(1, messageId);
 
 			ResultSet rs = ps.executeQuery();
 
@@ -103,6 +103,7 @@ public class MessageDao {
 			StringBuilder sql = new StringBuilder();
 			sql.append("UPDATE messages SET ");
 			sql.append("text = ? ");
+			//時間も追加
 			sql.append("WHERE id = ?");
 
 			ps = connection.prepareStatement(sql.toString());

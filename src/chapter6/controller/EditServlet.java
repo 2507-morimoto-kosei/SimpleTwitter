@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -42,31 +43,26 @@ public class EditServlet extends HttpServlet {
 		log.info(new Object(){}.getClass().getEnclosingClass().getName() +
 		" : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
+		HttpSession session = request.getSession();
 		List<String> errorMessages = new ArrayList<String>();
 
 		String messageId = request.getParameter("messageId");
 
-		//messageIDが空ということを許容しない
-		if (StringUtils.isBlank(messageId)) {
+		//messageIDが「空」または「数字でない」ということを許容しない
+		if (StringUtils.isBlank(messageId) || !messageId.matches("^[0-9]+$")) {
 			errorMessages.add("不正なパラメータが入力されました");
-			request.setAttribute("errorMessages", errorMessages);
-			request.getRequestDispatcher("edit.jsp").forward(request, response);
-			return;
-			//messageIDが数字でないことを許容しない
-		} else if(!messageId.matches("^[0-9]+$")) {
-			errorMessages.add("不正なパラメータが入力されました");
-			request.setAttribute("errorMessages", errorMessages);
-			request.getRequestDispatcher("edit.jsp").forward(request, response);
+			session.setAttribute("errorMessages", errorMessages);
+			response.sendRedirect("./");
 			return;
 		}
 
-		Message message = new MessageService().selectMessage(messageId);
+		Message message = new MessageService().selectMessage(Integer.parseInt(messageId));
 
 		//存在しないメッセージIDを許容しない
 		if (message == null) {
 			errorMessages.add("不正なパラメータが入力されました");
-			request.setAttribute("errorMessages", errorMessages);
-			request.getRequestDispatcher("edit.jsp").forward(request, response);
+			session.setAttribute("errorMessages", errorMessages);
+			response.sendRedirect("./");
 			return;
 		}
 
