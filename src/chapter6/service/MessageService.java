@@ -106,7 +106,7 @@ public class MessageService {
 			close(connection);
 		}
 	}
-
+	//ログインしているユーザーのメッセージ一覧を拾うためにDBと橋渡し
 	public List<UserMessage> select(String userId) {
 
 		log.info(new Object() {}.getClass().getEnclosingClass().getName() +

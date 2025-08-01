@@ -46,9 +46,9 @@ public class TopServlet extends HttpServlet {
 		}
 
 		String userId = request.getParameter("user_id");
+
 		//ログインしているユーザーのつぶやきを取得
 		List<UserMessage> messages = new MessageService().select(userId);
-
 		request.setAttribute("messages", messages);
 		request.setAttribute("isShowMessageForm", isShowMessageForm);
 		request.getRequestDispatcher("/top.jsp").forward(request, response);

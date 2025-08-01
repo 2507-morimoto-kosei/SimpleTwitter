@@ -82,9 +82,8 @@
 					</form>
 				</c:if>
 
-				<!--
 				<div class="comment-area">
-
+					<!-- 返信コメントをCommentServletへ -->
 					<c:if test="${ isShowMessageForm }">
 						<form action="comment" method="post">
 							返信<br />
@@ -93,7 +92,7 @@
 						<input type="submit" value="返信">（140文字まで）
 						</form>
 					</c:if>
-				</div>  -->
+				</div>
 
     		</c:forEach>
 		</div>
