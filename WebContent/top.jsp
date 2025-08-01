@@ -4,7 +4,7 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-    <head>
+	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>簡易Twitter</title>
 		<link href="./css/style.css" rel="stylesheet" type="text/css">
@@ -67,6 +67,9 @@
 					<div class="date"><fmt:formatDate value="${message.createdDate}" pattern="yyyy/MM/dd HH:mm:ss"/></div>
 				</div>
 
+				<!-- ここに返信コメントを表示させたいね -->
+
+
 				<c:if test="${ loginUser.id == message.userId}">
 					<form action="edit" method="get">
 						<input name="messageId" value= "${message.id}" id="id" type="hidden"/>
@@ -90,7 +93,7 @@
 						<input type="submit" value="返信">（140文字まで）
 						</form>
 					</c:if>
-				</div>-->
+				</div>  -->
 
     		</c:forEach>
 		</div>

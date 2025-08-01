@@ -18,9 +18,6 @@ import chapter6.beans.Message;
 import chapter6.logging.InitApplication;
 import chapter6.service.MessageService;
 
-/**
- * Servlet implementation class EditServlet
- */
 @WebServlet(urlPatterns = { "/edit" })
 public class EditServlet extends HttpServlet {
 	/**
@@ -56,7 +53,7 @@ public class EditServlet extends HttpServlet {
 			return;
 		}
 
-		Message message = new MessageService().selectMessage(Integer.parseInt(messageId));
+		Message message = new MessageService().select(Integer.parseInt(messageId));
 
 		//存在しないメッセージIDを許容しない
 		if (message == null) {

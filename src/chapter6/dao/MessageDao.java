@@ -12,7 +12,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import chapter6.beans.Message;
-import chapter6.exception.NoRowsUpdatedRuntimeException;
 import chapter6.exception.SQLRuntimeException;
 import chapter6.logging.InitApplication;
 
@@ -112,12 +111,7 @@ public class MessageDao {
 			ps.setString(1, message.getText());
 			ps.setInt(2, message.getId());
 
-			//SQL実行.処理したレコードの数を代入
-			int count = ps.executeUpdate();
-			if (count == 0) {
-				log.log(Level.SEVERE, "更新対象のレコードが存在しません", new NoRowsUpdatedRuntimeException());
-				throw new NoRowsUpdatedRuntimeException();
-			}
+			ps.executeUpdate();
 		} catch (SQLException e) {
 			log.log(Level.SEVERE, new Object() {}.getClass().getEnclosingClass().getName() +
 			" : " + e.toString(), e);
@@ -135,9 +129,7 @@ public class MessageDao {
 		PreparedStatement ps = null;
 		try {
 			StringBuilder sql = new StringBuilder();
-			sql.append("DELETE ");
-			sql.append("FROM messages ");
-			sql.append("WHERE id = ?");
+			sql.append("DELETE FROM messages WHERE id = ?");
 
 			ps = connection.prepareStatement(sql.toString());
 
