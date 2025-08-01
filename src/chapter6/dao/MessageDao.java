@@ -102,8 +102,9 @@ public class MessageDao {
 		try {
 			StringBuilder sql = new StringBuilder();
 			sql.append("UPDATE messages SET ");
-			sql.append("text = ? ");
-			//時間も追加
+			sql.append("text = ?, ");
+			sql.append("created_date = CURRENT_TIMESTAMP, ");
+			sql.append("updated_date = CURRENT_TIMESTAMP ");
 			sql.append("WHERE id = ?");
 
 			ps = connection.prepareStatement(sql.toString());

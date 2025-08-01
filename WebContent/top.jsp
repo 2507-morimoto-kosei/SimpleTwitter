@@ -42,6 +42,7 @@
 		</c:if>
 
 		<div class="form-area">
+			<!-- ログインしていたらつぶやき入力フォームを表示する -->
 			<c:if test="${ isShowMessageForm }">
 				<form action="message" method="post">
 					いま、どうしてる？<br />
@@ -66,19 +67,30 @@
 					<div class="date"><fmt:formatDate value="${message.createdDate}" pattern="yyyy/MM/dd HH:mm:ss"/></div>
 				</div>
 
-				<c:if test="${ not empty loginUser && loginUser.id == message.userId}">
+				<c:if test="${ loginUser.id == message.userId}">
 					<form action="edit" method="get">
 						<input name="messageId" value= "${message.id}" id="id" type="hidden"/>
 						<input type="submit" value="編集"/>
 					</form>
-				</c:if>
 
-				<c:if test="${ not empty loginUser && loginUser.id == message.userId}">
 					<form action="deleteMessage" method="post">
 						<input name="id" value="${message.id}" id="id" type="hidden"/>
 						<input type="submit" value="削除"/>
 					</form>
 				</c:if>
+
+				<!--
+				<div class="comment-area">
+
+					<c:if test="${ isShowMessageForm }">
+						<form action="comment" method="post">
+							返信<br />
+						<textarea name="text" cols="100" rows="5" class="tweet-box"></textarea><br />
+						<input name="messageId" value="${message.id}" id="id" type="hidden"/>
+						<input type="submit" value="返信">（140文字まで）
+						</form>
+					</c:if>
+				</div>-->
 
     		</c:forEach>
 		</div>

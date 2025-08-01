@@ -9,6 +9,21 @@
 		<link href="./css/style.css" rel="stylesheet" type="text/css">
 	</head>
 	<body>
+		<div class="header">
+			<c:if test="${ not empty loginUser }">
+				<a href="./">ホーム</a>
+				<a href="setting">設定</a>
+				<a href="logout">ログアウト</a>
+			</c:if>
+		</div>
+
+		<c:if test="${ not empty loginUser }">
+			<div class="profile"></div>
+			<div class="name"><h2><c:out value="${loginUser.name}"/></h2></div>
+			<div class="account">@<c:out value="${loginUser.account}"/></div>
+        	<div class="description"><c:out value="${loginUser.description}"/></div>
+		</c:if>
+
 		<div class="main-contents">
 			<c:if test="${ not empty errorMessages }">
 				<div class="errorMessages">
@@ -26,7 +41,7 @@
 					つぶやき<br>
 					<textarea name="editText" cols="100" rows="5" class="tweet-box">${message.text}</textarea><br />
 					<input name="editTextId" value="${message.id}" id = "id" type="hidden">
-					<input type="submit" value="更新">
+					<input type="submit" value="更新">（140文字まで）
 				</form>
 			</div>
 			<a href="./">戻る</a>
