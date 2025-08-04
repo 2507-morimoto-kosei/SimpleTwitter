@@ -8,12 +8,10 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.apache.commons.lang.StringUtils;
-
 import chapter6.beans.Comment;
-import chapter6.beans.UserMessage;
+import chapter6.beans.UserComment;
 import chapter6.dao.CommentDao;
-import chapter6.dao.UserMessageDao;
+import chapter6.dao.UserCommentDao;
 import chapter6.logging.InitApplication;
 
 public class CommentService {
@@ -55,8 +53,8 @@ public class CommentService {
 		}
 	}
 
-	//ログインしているユーザーのメッセージ一覧を拾うためにDBと橋渡し
-	public List<UserMessage> select(String userId) {
+	//返信一覧を拾うためにDBと橋渡し
+	public List<UserComment> select(int messageId) {
 
 		log.info(new Object() {}.getClass().getEnclosingClass().getName() +
 		" : " + new Object() {}.getClass().getEnclosingMethod().getName());
@@ -66,14 +64,14 @@ public class CommentService {
 		Connection connection = null;
 		try {
 			connection = getConnection();
-			Integer id = null;
-			if(!StringUtils.isEmpty(userId)) {
-				id = Integer.parseInt(userId);
-			}
+//			Integer id = null;
+//			if(!StringUtils.isEmpty(messageId)) {
+//				id = Integer.parseInt(messageId);
+//			}
 
-			List<UserMessage> messages = new UserMessageDao().select(connection, id, LIMIT_NUM);
+			List<UserComment> comments = new UserCommentDao().select(connection, LIMIT_NUM);
 			commit(connection);
-			return messages;
+			return comments;
 		} catch (RuntimeException e) {
 			rollback(connection);
 			log.log(Level.SEVERE, new Object() {}.getClass().getEnclosingClass().getName() +

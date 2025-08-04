@@ -37,9 +37,9 @@ public class LoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 
-		log.info(new Object() {
-		}.getClass().getEnclosingClass().getName() +
+		log.info(new Object() {}.getClass().getEnclosingClass().getName() +
 		" : " + new Object() {}.getClass().getEnclosingMethod().getName());
+
 		//login.jspへ画面遷移要求
 		request.getRequestDispatcher("login.jsp").forward(request, response);
 	}
@@ -65,9 +65,10 @@ public class LoginServlet extends HttpServlet {
 			request.getRequestDispatcher("login.jsp").forward(request, response);
 			return;
 		}
-		//登録済みユーザーであればセッション領域に登録済みユーザー情報塊を保存
+		//登録済みユーザーであればセッション領域に登録済みユーザー情報塊魂を保存
 		HttpSession session = request.getSession();
 		session.setAttribute("loginUser", user);
+		//リダイレクトし、TopServletのdoGetを呼び出す
 		response.sendRedirect("./");
 	}
 }

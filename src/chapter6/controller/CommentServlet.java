@@ -49,7 +49,7 @@ public class CommentServlet extends HttpServlet {
 
 		//top.jspから渡されたURLパラメータからテキストとmessageIDを取り出す
 		String text = request.getParameter("text");
-		String messageId = request.getParameter("messageId");
+		String messageId = request.getParameter("commentId");
 
 		if (!isValid(text, errorMessages)) {
 			session.setAttribute("errorMessages", errorMessages);
@@ -61,14 +61,16 @@ public class CommentServlet extends HttpServlet {
 		comment.setText(text);
 		comment.setMessageId(Integer.parseInt(messageId));
 
-
-		//セッション領域からログインユーザーIDを取ってきてMessageクラスにセット
-		//LoginServletでログインユーザーの塊魂はセッション領域に格納してたねぇ
+		//セッション領域からログインユーザー情報を取ってきてUserクラスにセット
 		User user = (User) session.getAttribute("loginUser");
 		comment.setUserId(user.getId());
 
-		//返信コメントをDBに登録するために「返信コメント」「messageID」「ログインユーザーのID」を一旦CommentServiceへ
+		//返信コメントをDBに登録
 		new CommentService().insert(comment);
+
+		session.setAttribute("commentId", messageId);
+
+//		TopServletへ飛ばす。ここはふぉわーどかりだいれくとか・・・
 		response.sendRedirect("./");
 	}
 
