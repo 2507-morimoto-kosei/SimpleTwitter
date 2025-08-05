@@ -17,7 +17,6 @@ import javax.servlet.http.HttpSession;
 
 @WebFilter(urlPatterns = {"/setting", "/edit"})
 public class LoginFilter implements Filter {
-	public static String DEFAULT_ENCODING = "UTF-8";
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response,
@@ -35,8 +34,8 @@ public class LoginFilter implements Filter {
 			errorMessages.add("ログインしてください");
 			session.setAttribute("errorMessages", errorMessages);
 			httpResponse.sendRedirect("./login");
+			return;
 		}
-		return;
 	}
 
 	@Override

@@ -54,7 +54,7 @@ public class CommentService {
 	}
 
 	//返信一覧を拾うためにDBと橋渡し
-	public List<UserComment> select(int messageId) {
+	public List<UserComment> select() {
 
 		log.info(new Object() {}.getClass().getEnclosingClass().getName() +
 		" : " + new Object() {}.getClass().getEnclosingMethod().getName());

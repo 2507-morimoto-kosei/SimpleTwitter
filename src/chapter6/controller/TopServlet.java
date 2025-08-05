@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import chapter6.beans.Comment;
 import chapter6.beans.User;
 import chapter6.beans.UserComment;
 import chapter6.beans.UserMessage;
@@ -58,18 +57,15 @@ public class TopServlet extends HttpServlet {
 		List<UserMessage> messages = new MessageService().select(userId, start, end);
 
 		//DBから返信一覧を取得
-		Comment comment = new Comment();
-		List<UserComment> comments = new CommentService().select((comment.getMessageId()));
+		List<UserComment> comments = new CommentService().select();
 
 		//UserMessageをリクエストスコープにセット
 		request.setAttribute("messages", messages);
 		request.setAttribute("isShowMessageForm", isShowMessageForm);
 		request.setAttribute("comments", comments);
 
-		if (start != null && end != null) {
-			request.setAttribute("start", start);
-			request.setAttribute("end", end);
-		}
+		request.setAttribute("start", start);
+		request.setAttribute("end", end);
 
 		request.getRequestDispatcher("/top.jsp").forward(request, response);
 	}

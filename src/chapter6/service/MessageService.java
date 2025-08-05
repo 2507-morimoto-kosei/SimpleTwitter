@@ -140,8 +140,7 @@ public class MessageService {
 			//終了日の入力有無によって分岐
 			if(!StringUtils.isBlank(end)) {
 				end += " 23:59:59";
-			}
-			else {
+			} else {
 				end = formatNowDate;
 			}
 			//つぶやき一覧を条件に合わせてDBから拾ってくる

@@ -27,7 +27,7 @@
 		<div class="search">
 			<form action="./" method="get">
 				日付<input type="date" value="${start}" name="start">～<input type="date" value="${end}"name="end">
-			<input type="submit" value="絞込">（140文字まで）
+				<input type="submit" value="絞込">（140文字まで）
 			</form>
 		</div>
 
@@ -35,7 +35,7 @@
 			<div class="profile"></div>
 			<div class="name"><h2><c:out value="${loginUser.name}"/></h2></div>
 			<div class="account">@<c:out value="${loginUser.account}"/></div>
-        	<div class="description"><c:out value="${loginUser.description}"/></div>
+			<div class="description"><c:out value="${loginUser.description}"/></div>
 		</c:if>
 
 		<c:if test="${ not empty errorMessages }">
