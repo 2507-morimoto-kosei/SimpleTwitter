@@ -19,7 +19,6 @@ import javax.servlet.http.HttpSession;
 public class LoginFilter implements Filter {
 	public static String DEFAULT_ENCODING = "UTF-8";
 
-
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response,
 		FilterChain chain) throws IOException, ServletException {
@@ -35,8 +34,7 @@ public class LoginFilter implements Filter {
 		} else {
 			errorMessages.add("ログインしてください");
 			session.setAttribute("errorMessages", errorMessages);
-			httpResponse.sendRedirect("/login");
-			return;
+			httpResponse.sendRedirect("./login");
 		}
 		return;
 	}

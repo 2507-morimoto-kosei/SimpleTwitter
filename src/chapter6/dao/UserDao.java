@@ -153,7 +153,6 @@ public class UserDao {
 		log.info(new Object() {}.getClass().getEnclosingClass().getName() +
 		" : " + new Object() {}.getClass().getEnclosingMethod().getName());
 
-
 		PreparedStatement ps = null;
 		try {
 			String sql = "SELECT * FROM users WHERE account = ?";

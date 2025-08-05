@@ -30,7 +30,7 @@ public class UserMessageDao {
 		application.init();
 	}
 
-	public List<UserMessage> select(Connection connection, Integer id, int num) {
+	public List<UserMessage> select(Connection connection, Integer id, String start, String end,int num) {
 
 		log.info(new Object() {}.getClass().getEnclosingClass().getName() +
 		" : " + new Object() {}.getClass().getEnclosingMethod().getName());
@@ -49,16 +49,20 @@ public class UserMessageDao {
 			sql.append("FROM messages ");
 			sql.append("INNER JOIN users ");
 			sql.append("ON messages.user_id = users.id ");
-			if (id != null) {
-				sql.append("WHERE ");
-				sql.append("user_id = ? ");
+			sql.append("WHERE ");
+			sql.append("messages.created_date BETWEEN ? ");
+			sql.append("AND ? ");
+			if(id != null) {
+				sql.append("AND user_id = ? ");
 			}
 			sql.append("ORDER BY created_date DESC limit " + num);
 
 			ps = connection.prepareStatement(sql.toString());
 
-			if (id != null) {
-				ps.setInt(1, id);
+			ps.setString(1, start);
+			ps.setString(2, end);
+			if(id != null) {
+				ps.setInt(3, id);
 			}
 
 			//SQLを実行、ResultSet型に入る

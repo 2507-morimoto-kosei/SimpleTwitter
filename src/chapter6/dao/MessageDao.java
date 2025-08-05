@@ -146,8 +146,7 @@ public class MessageDao {
 
 	private List<Message> toMessage(ResultSet rs) throws SQLException {
 
-		log.info(new Object() {
-		}.getClass().getEnclosingClass().getName() +
+		log.info(new Object() {}.getClass().getEnclosingClass().getName() +
 		" : " + new Object() {}.getClass().getEnclosingMethod().getName());
 
 		List<Message> messages = new ArrayList<Message>();

@@ -23,6 +23,14 @@
 			</c:if>
 		</div>
 
+		<!-- 絞込検索機能 -->
+		<div class="search">
+			<form action="./" method="get">
+				日付<input type="date" value="${start}" name="start">～<input type="date" value="${end}"name="end">
+			<input type="submit" value="絞込">（140文字まで）
+			</form>
+		</div>
+
 		<c:if test="${ not empty loginUser }">
 			<div class="profile"></div>
 			<div class="name"><h2><c:out value="${loginUser.name}"/></h2></div>
@@ -53,76 +61,65 @@
 		</div>
 
 		<!-- つぶやかれたメッセージを表示させる -->
-
 		<div class="messages">
-		<!-- messagesはメッセージ情報塊魂を要素として格納しているリストそのもの -->
-		<!-- messageはリストに格納されている情報塊魂の一つひとつを表す -->
+		<!-- messagesはメッセージ情報塊魂を要素として格納しているリストそのもの。messageはリストに格納されている情報塊魂の一つひとつを表す -->
+			<c:forEach items="${messages}" var="message">
+				<div class="message">
+					<div class="account-name">
+						<span class="account">
+							<a href="./?user_id=<c:out value="${message.userId}"/> ">
+								<c:out value="${message.account}"/>
+							</a>
+						</span>
+						<span class="name"><c:out value="${message.name}"/></span>
+					</div>
+					<div class="text"><pre><c:out value="${message.text}"/></pre></div>
+					<div class="date"><fmt:formatDate value="${message.createdDate}" pattern="yyyy/MM/dd HH:mm:ss"/></div>
+				</div>
 
-				<c:forEach items="${messages}" var="message">
-					<div class="message">
-						<div class="account-name">
-							<span class="account">
-								<a href="./?user_id=<c:out value="${message.userId}"/> ">
-									<c:out value="${message.account}"/>
-								</a>
-							</span>
-							<span class="name"><c:out value="${message.name}"/></span>
+				<!-- コメント編集&削除ボタンを表示させる -->
+				<c:if test="${ loginUser.id == message.userId}">
+					<form action="edit" method="get">
+						<input name="messageId" value= "${message.id}" id="id" type="hidden"/>
+						<input type="submit" value="編集"/>
+					</form>
+
+					<form action="deleteMessage" method="post">
+						<input name="id" value="${message.id}" id="id" type="hidden"/>
+						<input type="submit" value="削除"/>
+					</form>
+				</c:if>
+				<!-- 返信コメントをCommentServletへ -->
+				<div class="comment-area">
+					<c:if test="${ isShowMessageForm }">
+						<form action="comment" method="post">
+							返信<br />
+						<textarea name="text" cols="100" rows="5" class="tweet-box"></textarea><br />
+						<input name="commentId" value="${message.id}" id="id" type="hidden"/>
+						<input type="submit" value="返信">（140文字まで）
+						</form>
+					</c:if>
+				</div>
+
+				<!-- 返信コメントを表示 -->
+				<c:forEach items="${comments}" var="comment">
+					<c:if test="${ comment.messageId == message.id}">
+						<div class="comment">
+							<div class="account-name">
+								<span class="account">
+									<a href="./?user_id=<c:out value="${comment.userId}"/> ">
+										<c:out value="${comment.account}"/>
+									</a>
+								</span>
+								<span class="name"><c:out value="${comment.name}"/></span>
+							</div>
+							<div class="text"><pre><c:out value="${comment.text}"/></pre></div>
+							<div class="date"><fmt:formatDate value="${comment.createdDate}" pattern="yyyy/MM/dd HH:mm:ss"/></div>
 						</div>
-						<div class="text"><pre><c:out value="${message.text}"/></pre></div>
-						<div class="date"><fmt:formatDate value="${message.createdDate}" pattern="yyyy/MM/dd HH:mm:ss"/></div>
-					</div>
-
-					<!-- コメント編集&削除ボタンを表示させる -->
-					<c:if test="${ loginUser.id == message.userId}">
-						<form action="edit" method="get">
-							<input name="messageId" value= "${message.id}" id="id" type="hidden"/>
-							<input type="submit" value="編集"/>
-						</form>
-
-						<form action="deleteMessage" method="post">
-							<input name="id" value="${message.id}" id="id" type="hidden"/>
-							<input type="submit" value="削除"/>
-						</form>
 					</c:if>
-					<!-- 返信コメントをCommentServletへ -->
-					<div class="comment-area">
-						<c:if test="${ isShowMessageForm }">
-							<form action="comment" method="post">
-								返信<br />
-							<textarea name="text" cols="100" rows="5" class="tweet-box"></textarea><br />
-							<input name="commentId" value="${message.id}" id="id" type="hidden"/>
-							<input type="submit" value="返信">（140文字まで）
-							</form>
-						</c:if>
-					</div>
-
-					<!-- 返信コメントを表示 -->
-					<c:if test="${ isShowCommentForm }">
-						<c:forEach items="${comments}" var="comment">
-							<c:if test="${ comment.messageId == message.id}">
-								<div class="comment">
-									<div class="account-name">
-										<span class="account">
-											<a href="./?user_id=<c:out value="${comment.userId}"/> ">
-												<c:out value="${comment.account}"/>
-											</a>
-										</span>
-										<span class="name"><c:out value="${comment.name}"/></span>
-									</div>
-									<div class="text"><pre><c:out value="${comment.text}"/></pre></div>
-									<div class="date"><fmt:formatDate value="${comment.createdDate}" pattern="yyyy/MM/dd HH:mm:ss"/></div>
-								</div>
-							</c:if>
-						</c:forEach>
-					</c:if>
-
 				</c:forEach>
-
+			</c:forEach>
 		</div>
-
-
-
-
 
 		<div class="copyright"> Copyright(c)森本晃生</div>
 	</body>

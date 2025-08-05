@@ -64,10 +64,6 @@ public class CommentService {
 		Connection connection = null;
 		try {
 			connection = getConnection();
-//			Integer id = null;
-//			if(!StringUtils.isEmpty(messageId)) {
-//				id = Integer.parseInt(messageId);
-//			}
 
 			List<UserComment> comments = new UserCommentDao().select(connection, LIMIT_NUM);
 			commit(connection);

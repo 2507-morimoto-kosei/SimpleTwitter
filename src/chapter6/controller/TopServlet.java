@@ -9,7 +9,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import chapter6.beans.Comment;
 import chapter6.beans.User;
@@ -43,8 +42,6 @@ public class TopServlet extends HttpServlet {
 		log.info(new Object() {}.getClass().getEnclosingClass().getName() +
 		" : " + new Object() {}.getClass().getEnclosingMethod().getName());
 
-		HttpSession session = request.getSession();
-
 		//ログインしているか確認。いればtrueを返しログインしている画面を表示するように準備
 		boolean isShowMessageForm = false;
 		User user = (User) request.getSession().getAttribute("loginUser");
@@ -52,30 +49,27 @@ public class TopServlet extends HttpServlet {
 			isShowMessageForm = true;
 		}
 
-		//ここのuser_idはただ投げてるだけ？
+		//最初にトップが表示された時はnull、アカウント名のリンクが踏まれたらそのuserIDが来る
 		String userId = request.getParameter("user_id");
-
+		String start = request.getParameter("start");
+		String end = request.getParameter("end");
 
 		//ログインしているユーザーのつぶやき一覧を取得
-		List<UserMessage> messages = new MessageService().select(userId);
-
+		List<UserMessage> messages = new MessageService().select(userId, start, end);
 
 		//DBから返信一覧を取得
 		Comment comment = new Comment();
 		List<UserComment> comments = new CommentService().select((comment.getMessageId()));
 
-		//返信情報があるか確認。もしあればtrueを返し返信一覧画面を表示するよう準備
-		boolean isShowCommentForm = false;
-		if (session.getAttribute("commentId") != null) {
-			isShowCommentForm = true;
-		}
-
 		//UserMessageをリクエストスコープにセット
 		request.setAttribute("messages", messages);
 		request.setAttribute("isShowMessageForm", isShowMessageForm);
-
 		request.setAttribute("comments", comments);
-		request.setAttribute("isShowCommentForm", isShowCommentForm);
+
+		if (start != null && end != null) {
+			request.setAttribute("start", start);
+			request.setAttribute("end", end);
+		}
 
 		request.getRequestDispatcher("/top.jsp").forward(request, response);
 	}

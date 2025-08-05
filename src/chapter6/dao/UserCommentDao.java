@@ -51,17 +51,9 @@ public class UserCommentDao {
 			sql.append("FROM comments ");
 			sql.append("INNER JOIN users ");
 			sql.append("ON comments.user_id = users.id ");
-//			if (id != null) {
-//				sql.append("WHERE ");
-//				sql.append("user_id = ? ");
-//			}
-			sql.append("ORDER BY created_date DESC limit " + num);
+			sql.append("ORDER BY created_date ASC limit " + num);
 
 			ps = connection.prepareStatement(sql.toString());
-
-//			if (id != null) {
-//				ps.setInt(1, id);
-//			}
 
 			//SQLを実行、ResultSet型に入る
 			ResultSet rs = ps.executeQuery();

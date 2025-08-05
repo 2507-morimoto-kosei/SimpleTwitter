@@ -36,11 +36,8 @@ public class CommentServlet extends HttpServlet {
 		application.init();
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		log.info(new Object(){}.getClass().getEnclosingClass().getName() +
 		" : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
@@ -68,9 +65,10 @@ public class CommentServlet extends HttpServlet {
 		//返信コメントをDBに登録
 		new CommentService().insert(comment);
 
+		//返信ボタンが押されたか判定するために、送られてきたmessageIDをセッション領域にセット
 		session.setAttribute("commentId", messageId);
 
-//		TopServletへ飛ばす。ここはふぉわーどかりだいれくとか・・・
+		//TopServletへ飛ばす
 		response.sendRedirect("./");
 	}
 
