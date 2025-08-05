@@ -8,6 +8,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>簡易Twitter</title>
 		<link href="./css/style.css" rel="stylesheet" type="text/css">
+		<script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
 	</head>
 	<body>
 		<div class="header">
@@ -26,7 +27,7 @@
 		<!-- 絞込検索機能 -->
 		<div class="search">
 			<form action="./" method="get">
-				日付<input type="date" value="${start}" name="start">～<input type="date" value="${end}"name="end">
+				日付<input type="date" value="${start}" name="start">～<input type="date" value="${end}" name="end">
 				<input type="submit" value="絞込">（140文字まで）
 			</form>
 		</div>

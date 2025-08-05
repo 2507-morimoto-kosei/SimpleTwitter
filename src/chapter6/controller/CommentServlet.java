@@ -65,9 +65,6 @@ public class CommentServlet extends HttpServlet {
 		//返信コメントをDBに登録
 		new CommentService().insert(comment);
 
-		//返信ボタンが押されたか判定するために、送られてきたmessageIDをセッション領域にセット
-		session.setAttribute("commentId", messageId);
-
 		//TopServletへ飛ばす
 		response.sendRedirect("./");
 	}
