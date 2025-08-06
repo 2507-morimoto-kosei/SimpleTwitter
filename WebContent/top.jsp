@@ -8,7 +8,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>簡易Twitter</title>
 		<link href="./css/style.css" rel="stylesheet" type="text/css">
-		<script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+
 	</head>
 	<body>
 		<div class="header">
@@ -77,7 +77,6 @@
 					<div class="text"><pre><c:out value="${message.text}"/></pre></div>
 					<div class="date"><fmt:formatDate value="${message.createdDate}" pattern="yyyy/MM/dd HH:mm:ss"/></div>
 				</div>
-
 				<!-- コメント編集&削除ボタンを表示させる -->
 				<c:if test="${ loginUser.id == message.userId}">
 					<form action="edit" method="get">
@@ -86,10 +85,12 @@
 					</form>
 
 					<form action="deleteMessage" method="post">
-						<input name="id" value="${message.id}" id="id" type="hidden"/>
-						<input type="submit" value="削除"/>
+						<input name="id" value="${message.id}" type="hidden"/>
+						<input id="delete" type="submit" value="削除"/>
 					</form>
 				</c:if>
+				<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+				<script src="./js/main.js"></script>
 				<!-- 返信コメントをCommentServletへ -->
 				<div class="comment-area">
 					<c:if test="${ isShowMessageForm }">
